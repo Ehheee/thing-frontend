@@ -17,6 +17,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			jsonUtils.renameKey(keyList, oldKey, newKey);
 			keyList.pop();
 			keyList.push(newKey);
+			this.changed = true;
 		}
 	};
 	module.prototype.apply = function() {

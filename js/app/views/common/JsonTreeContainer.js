@@ -1,6 +1,10 @@
 define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 	var JsObjectView = app.getJsObjectView();
 	var module = Backbone.View.extend({
+		events: {
+			"click .js_save": "saveModel",
+			"click .js_revert": "revertModel"
+		},
 		render: function() {
 			this.$(".js_jsContainer").html(this.subView.render().el);
 			return this;
@@ -15,6 +19,12 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 				this.subView.remove();
 			}
 			this.render();
+		},
+		saveModel: function() {
+			this.model.save();
+		},
+		revertModel: function() {
+			this.model.revert();
 		},
 		createSubView: function() {
 			this.subView = new JsObjectView({model: this.model});

@@ -1,0 +1,3 @@
+define({
+	appRootUrl: "thing-frontend"
+});

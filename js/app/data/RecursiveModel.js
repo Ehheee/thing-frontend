@@ -34,7 +34,10 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 	};
 	module.prototype.applyChanges = function() {
 		if (this.changed) {
-			this.trigger("model:save", this);
+			this.trigger("model:save");
+		}
+		if (this.removed) {
+			this.trigger("model:remove");
 		}
 		jsonUtils.removeNullValues(tree);
 		this.resetChangeFlags();
@@ -49,6 +52,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			}
 		}
 		this.resetChangeFlags();
+		this.trigger("model:revert");
 	};
 	module.prototype.resetChangeFlags = function() {
 		this.removed = false;

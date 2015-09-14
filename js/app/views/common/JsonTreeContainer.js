@@ -21,7 +21,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			this.render();
 		},
 		saveModel: function() {
-			this.model.save();
+			this.model.applyChanges();
 		},
 		revertModel: function() {
 			this.model.revert();

@@ -1,4 +1,5 @@
 require(["backbone", "app/applicationContainer"], function(Backbone, app) {
+	var BaseObjectView = app.getBaseObjectView();
 	var module = Backbone.View.extend({
 		template: _.template(app.templateLoader.get("keyValueInputTemplate")),
 		buttonTemplate: _.template(app.templateLoader.get("buttonTemplate")),
@@ -6,7 +7,7 @@ require(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			"blur .js_valueInput": "onValueInput"
 		},
 		render: function() {
-			this.setElement(this.template({}));
+			BaseObjectView.prototype.render.call(this);
 			this.$(".js_keyInput").val(this.key);
 			return this;
 		},
@@ -15,7 +16,7 @@ require(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		},
 		onValueInput: function() {
 			var value = this.$(".valueInput").val();
-			this.baseModel.setField(this.keyList, value);
+			this.baseModel.setField(this.keyList.slice(), value);
 		}
 	});
 	return module;

@@ -4,17 +4,20 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			"blur .js_keyInput": "onKeyInput"
 		},
 		render: function() {
-			this.setElement(this.template({}));
-			this.$(".js_keyInput").val(this.key);
+			this.setElement(this.template({key: (this.key ? this.key: this.displayName)}));
 			this.$el.css("margin-left", (10*this.depth) + "px");
 			return this;
 		},
 		initialize: function(options) {
 			this.baseModel = options.baseModel;
-			this.key = options.key;
-			this.keyList = options.keyList.slice();
-			this.depth = this.keyList.length();
-			this.keyList.push(this.key);
+			if (options.keyList) {
+				this.keyList = options.keyList.slice();
+				this.key = this.keyList[this.keyList.length - 1];
+				this.depth = this.keyList.length();
+			} else {
+				this.depth = 0;
+				this.displayName = options.displayName;
+			}
 		},
 		setRemoved: function() {
 			this.$el.addClass("toBeRemoved");
@@ -22,12 +25,44 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			this.toBeRemoved = true;
 		},
 		onKeyInput: function(evt) {
+			//No modifying array keys
+			if (_.isArray(this.baseModel.getField(this.keyList))) {
+				return;
+			}
 			var key = this.$(".js_keyInput").val();
 			if (key !== this.key) {
 				this.baseModel.renameKey(this.keyList, this.key, key);
 				this.trigger("view:changedKey");
 			}
 		},
+		applyChanges: function() {
+			if (this.toBeRemoved) {
+				this.remove();
+			} else {
+				this.resetClasses();
+				this.resetChangeFlags();
+			}
+		},
+		revertChanges: function() {
+			if (this.toBeAdded) {
+				this.remove();
+			} else {
+				this.resetClasses();
+				this.resetChangeFlags();
+			}
+		},
+		resetClasses: function() {
+			this.$el.removeClass("toBeRemoved");
+			this.$el.removeClass("toBeChanged");
+		},
+		resetChangeFlags: function() {
+			this.toBeRemoved = false;
+			this.toBeChanged = false;
+		},
+		remove: function() {
+			this.trigger("view:removed");
+			Backbone.View.remove.call(this);
+		}
 	});
 	return module;
 });

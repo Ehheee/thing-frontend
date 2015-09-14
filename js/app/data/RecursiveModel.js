@@ -13,9 +13,12 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			this.changed = true;
 		}
 	};
-	module.prototype.renameKey = function(keyList, oldKey, newKey) {
+	module.prototype.getField = function(keyList) {
+		return jsonUtils.getFromJson(this.data, keyList);
+	};
+	module.prototype.renameKey = function(keyList, newKey) {
 		if (oldKey !== newKey) {
-			jsonUtils.renameKey(keyList, oldKey, newKey);
+			jsonUtils.renameKey(this.data, keyList, newKey);
 			keyList.pop();
 			keyList.push(newKey);
 			this.changes.push({keyList: keyList, key: oldKey});
@@ -36,13 +39,13 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		jsonUtils.removeNullValues(tree);
 		this.resetChangeFlags();
 	};
-	module.prototype.revert = function() {
+	module.prototype.revertChanges = function() {
 		while (this.changes.length > 0) {
 			var change = this.changes.pop();
 			if (change.value) {
 				jsonUtils.setField(this.data, change.keyList, change.value);
 			} else if (change.key) {
-				jsonUtils.renameKey(keyList, keyList[keyList.length - 1], change.key);
+				jsonUtils.renameKey(this.data, keyList, change.key);
 			}
 		}
 		this.resetChangeFlags();

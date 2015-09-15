@@ -20,14 +20,14 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 				return app.getJsObjectView();
 			}
 			if (utils.isValueKey(this.model, key)) {
-				return app.getKeyValueInputView;
+				return app.getKeyValueInputView();
 			}
 		},
 		createSubView: function(key) {
 			var k = this.keyList.slice();
 			k.push(key);
 			var ViewType = this.getSubViewType(key);
-			this.subViews[key] = new ViewType({model: this.model[key], keyList: k});
+			this.subViews[key] = new ViewType({model: this.model[key], keyList: k, baseView: this.baseView});
 		},
 		getSubView: function(key) {
 			var subView = this.subViews[key];

@@ -10,6 +10,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		},
 		initialize: function(options) {
 			this.baseModel = options.baseModel;
+			this.baseView = options.baseView;
 			if (options.keyList) {
 				this.keyList = options.keyList.slice();
 				this.key = this.keyList[this.keyList.length - 1];
@@ -23,6 +24,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			this.$el.addClass("toBeRemoved");
 			this.baseModel.remove(this.keyList.slice());
 			this.toBeRemoved = true;
+			this.listenClearAndApply();
 		},
 		onKeyInput: function(evt) {
 			//No modifying array keys
@@ -33,6 +35,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			if (key !== this.key) {
 				this.baseModel.renameKey(this.keyList, this.key, key);
 				this.trigger("view:changedKey");
+				this.listenClearAndApply();
 			}
 		},
 		applyChanges: function() {
@@ -52,8 +55,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			}
 		},
 		resetClasses: function() {
-			this.$el.removeClass("toBeRemoved");
-			this.$el.removeClass("toBeChanged");
+			this.$el.removeClass("toBeRemoved toBeAdded toBeChanged");
 		},
 		resetChangeFlags: function() {
 			this.toBeRemoved = false;
@@ -62,6 +64,10 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		remove: function() {
 			this.trigger("view:removed");
 			Backbone.View.remove.call(this);
+		},
+		listenClearAndApply: function() {
+			this.listenTo(this.baseView, "view:applyChanges", this.applyChanges);
+			this.listenTo(this.baseView, "view:revertChanges", this.revertChanges);
 		}
 	});
 	return module;

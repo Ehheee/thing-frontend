@@ -22,12 +22,13 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		},
 		saveModel: function() {
 			this.model.applyChanges();
+			this.trigger("view:applyChanges");
 		},
 		revertModel: function() {
 			this.model.revert();
 		},
 		createSubView: function() {
-			this.subView = new JsObjectView({model: this.model});
+			this.subView = new JsObjectView({model: this.model, baseView: this});
 		}
 	});
 	return module;

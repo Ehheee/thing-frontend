@@ -1,6 +1,6 @@
 require(["backbone", "app/applicationContainer"], function(Backbone, app) {
 	var BaseObjectView = app.getBaseObjectView();
-	var module = Backbone.View.extend({
+	var module = BaseObjectView.extend({
 		template: _.template(app.templateLoader.get("keyValueInputTemplate")),
 		buttonTemplate: _.template(app.templateLoader.get("buttonTemplate")),
 		events: {
@@ -17,6 +17,7 @@ require(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		onValueInput: function() {
 			var value = this.$(".valueInput").val();
 			this.baseModel.setField(this.keyList.slice(), value);
+			this.listenClearAndApply();
 		}
 	});
 	return module;

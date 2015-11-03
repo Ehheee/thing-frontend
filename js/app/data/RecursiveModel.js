@@ -1,5 +1,8 @@
-define(["backbone", "app/applicationContainer"], function(Backbone, app) {
-	var jsonUtils = app.getJsonUtils();
+define(["backbone"], function(Backbone) {
+	var jsonUtils;
+	Backbone.once("application:loaded", function(app) {
+		jsonUtils = app.jsonUtils;
+	});
 	var module = function(data) {
 		this.data = data;
 		this.changes = [];
@@ -59,4 +62,5 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		this.changed = false;
 	};
 	_.extend(module.prototype, Backbone.events);
+	return module;
 });

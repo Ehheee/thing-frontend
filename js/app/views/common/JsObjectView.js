@@ -1,7 +1,10 @@
-define(["backbone", "app/applicationContainer"], function(Backbone, app) {
-	var BaseObjectView = app.getBaseObjectView();
+define(["backbone", "app/views/common/BaseObjectView"], function(Backbone, BaseObjectView) {
+	var app;
+	Backbone.once("application:loaded", function(container) {
+		app = container;
+	});
 	var module = BaseObjectView.extend({
-		template: templateLoader.get("jsObjectTemplate"),
+		template: app.templateLoader.get("jsObjectTemplate"),
 		initialize: function() {
 			BaseObjectView.prototype.initialize.call(this);
 		},
@@ -17,10 +20,10 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		},
 		getSubViewType: function(key) {
 			if (utils.isObjectKey(this.model, key)) {
-				return app.getJsObjectView();
+				return this.constructor;
 			}
 			if (utils.isValueKey(this.model, key)) {
-				return app.getKeyValueInputView();
+				return app.KeyValueInputView;
 			}
 		},
 		createSubView: function(key) {

@@ -1,16 +1,9 @@
-define(["app/data/RecursiveModel"], function() {
-	var modules = {
-		"RecursiveModel": "app/data/RecursiveModel",
-		"jsonUtils": "app/tools/jsonUtils"
-	};
+define(["backbone", "app/tools/jsonUtils", "app/templateLoader"],
+function(Backbone, jsonUtils, templateLoader) {
 	var module = {
-		
+		"jsonUtils": jsonUtils,
+		"templateLoader": templateLoader,
 	};
-	_.each(modules, function(value, key) {
-		key = "get" + key.charAt(0).toUpperCase() + key.slice(1);
-		module[key] = function() {
-			return require(value);
-		};
-	});
+	Backbone.trigger("application:loaded", module);
 	return module;
 });

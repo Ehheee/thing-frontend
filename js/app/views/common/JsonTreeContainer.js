@@ -18,7 +18,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			if (this.subView) {
 				this.subView.remove();
 			}
-			this.subView = this.createSubView();
+			this.createSubView();
 			this.render();
 		},
 		saveModel: function() {

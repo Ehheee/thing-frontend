@@ -1,12 +1,8 @@
-define(["backbone", "app/views/common/BaseObjectView"], function(Backbone, BaseObjectView) {
-	var app;
-	Backbone.once("application:loaded", function(container) {
-		app = container;
-	});
+define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer"], function(Backbone, BaseObjectView, app) {
 	var module = BaseObjectView.extend({
 		template: app.templateLoader.get("jsObjectTemplate"),
-		initialize: function() {
-			BaseObjectView.prototype.initialize.call(this);
+		initialize: function(options) {
+			BaseObjectView.prototype.initialize.call(this, options);
 		},
 		render: function() {
 			BaseObjectView.prototype.render.call(this);
@@ -14,8 +10,10 @@ define(["backbone", "app/views/common/BaseObjectView"], function(Backbone, BaseO
 			return this;
 		},
 		renderSubViews: function() {
-			for (var i = 0; i < this.subViews.length; i++) {
-				this.$(".js_jsContainer").append(this.subViews[i].render().$el);
+			if (this.expanded) {
+				for (var i = 0; i < this.subViews.length; i++) {
+					this.$(".js_jsContainer").append(this.subViews[i].render().$el);
+				}
 			}
 		},
 		getSubViewType: function(key) {
@@ -39,5 +37,6 @@ define(["backbone", "app/views/common/BaseObjectView"], function(Backbone, BaseO
 			}
 			return subView;
 		}
-	}); 
+	});
+	return module;
 });

@@ -14,7 +14,7 @@ define(["backbone", "app/config"], function(Backbone, config) {
 			html = $(html);
 			html.each(function(i, element) {
 				if (element.type === "text/template") {
-					module[element.id] = element.innerHTML;
+					module[element.id] = _.template(element.innerHTML);
 				}
 			});
 			loaded++;

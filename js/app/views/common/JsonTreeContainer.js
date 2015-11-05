@@ -10,7 +10,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			return this;
 		},
 		initialize: function(options) {
-			this.filter = options.filter;
+			_.extend(this, options);
 			this.listenTo(this.filter, "filter:newData", this.onNewData);  
 		},
 		onNewData: function(model) {
@@ -28,7 +28,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			this.model.revert();
 		},
 		createSubView: function() {
-			this.subView = new app.JsObjectView({model: this.model, baseView: this});
+			this.subView = new app.JsObjectView({baseModel: this.model, baseView: this, displayName: this.displayName});
 		}
 	});
 	return module;

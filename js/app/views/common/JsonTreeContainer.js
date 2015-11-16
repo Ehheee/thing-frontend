@@ -28,7 +28,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			this.model.revert();
 		},
 		createSubView: function() {
-			this.subView = new app.JsObjectView({baseModel: this.model, baseView: this, displayName: this.displayName});
+			this.subView = new app.JsObjectView({baseModel: this.model, keyList: [], baseView: this, displayName: this.displayName});
 		}
 	});
 	return module;

@@ -14,11 +14,10 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			if (options.keyList) {
 				this.keyList = options.keyList.slice();
 				this.key = this.keyList[this.keyList.length - 1];
-				this.depth = this.keyList.length();
-			} else {
-				this.depth = 0;
-				this.displayName = options.displayName;
+				this.depth = this.keyList.length;
 			}
+			this.displayName = options.displayName;
+			this.model = this.baseModel.getField(this.keyList);
 		},
 		setRemoved: function() {
 			this.$el.addClass("toBeRemoved");

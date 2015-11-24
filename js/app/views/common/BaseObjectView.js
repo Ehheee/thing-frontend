@@ -4,8 +4,9 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			"blur .js_keyInput": "onKeyInput"
 		},
 		render: function() {
-			this.setElement(this.template({key: (this.key ? this.key: this.displayName)}));
-			this.$el.css("margin-left", (10*this.depth) + "px");
+			this.$el.html(this.template({key: (this.key ? this.key: this.displayName)}));
+			this.delegateEvents();
+			this.$el.css("margin-left", (11*this.depth) + "px");
 			return this;
 		},
 		initialize: function(options) {

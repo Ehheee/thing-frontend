@@ -1,15 +1,11 @@
-define(["backbone"], function(Backbone) {
-	var jsonUtils;
-	Backbone.once("application:loaded", function(app) {
-		jsonUtils = app.jsonUtils;
-	});
+define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 	var module = function(data) {
 		this.data = data;
 		this.changes = [];
 	};
 	module.prototype.setField = function(keyList, value) {
-		var oldValue = jsonUtils.getFromJson(keyList);
-		var newValue = jsonUtils.stringToType(value);
+		var oldValue = app.jsonUtils.getFromJson(this.data, keyList);
+		var newValue = app.jsonUtils.stringToType(value);
 		if (newValue !== oldValue) {
 			app.jsonUtils.setField(this.data, keyList, value);
 			this.changes.push({keyList: keyList, value:oldValue});
@@ -17,11 +13,11 @@ define(["backbone"], function(Backbone) {
 		}
 	};
 	module.prototype.getField = function(keyList) {
-		return jsonUtils.getFromJson(this.data, keyList);
+		return app.jsonUtils.getFromJson(this.data, keyList);
 	};
 	module.prototype.renameKey = function(keyList, newKey) {
 		if (oldKey !== newKey) {
-			jsonUtils.renameKey(this.data, keyList, newKey);
+			app.jsonUtils.renameKey(this.data, keyList, newKey);
 			keyList.pop();
 			keyList.push(newKey);
 			this.changes.push({keyList: keyList, key: oldKey});
@@ -42,16 +38,16 @@ define(["backbone"], function(Backbone) {
 		if (this.removed) {
 			this.trigger("model:remove");
 		}
-		jsonUtils.removeNullValues(tree);
+		app.jsonUtils.removeNullValues(tree);
 		this.resetChangeFlags();
 	};
 	module.prototype.revertChanges = function() {
 		while (this.changes.length > 0) {
 			var change = this.changes.pop();
 			if (change.value) {
-				jsonUtils.setField(this.data, change.keyList, change.value);
+				app.jsonUtils.setField(this.data, change.keyList, change.value);
 			} else if (change.key) {
-				jsonUtils.renameKey(this.data, keyList, change.key);
+				app.jsonUtils.renameKey(this.data, keyList, change.key);
 			}
 		}
 		this.resetChangeFlags();

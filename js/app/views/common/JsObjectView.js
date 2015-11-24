@@ -1,48 +1,46 @@
-define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer"], function(Backbone, BaseObjectView, app) {
+define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer", "app/views/common/KeyValueInputView"], function(Backbone, BaseObjectView, app, KeyValueInputView) {
 	var module = BaseObjectView.extend({
 		events: {
 			"click .expandButton": "onExpand"
 		},
 		template: app.templateLoader.get("jsObjectTemplate"),
+		className: "jsObject",
 		initialize: function(options) {
+			this.subViews = {};
 			BaseObjectView.prototype.initialize.call(this, options);
 		},
 		render: function() {
 			BaseObjectView.prototype.render.call(this);
 			this.expandButton = this.$(".expandButton");
-			this.renderSubViews();
+			if (this.expanded) {
+				this.expand();
+			}
 			return this;
 		},
-		renderSubViews: function() {
-			if (this.expanded) {
-				for (var i = 0; i < this.subViews.length; i++) {
-					this.$(".js_jsContainer").append(this.subViews[i].render().$el);
-				}
-			}
-		},
 		getSubViewType: function(key) {
-			if (utils.isObjectKey(this.model, key)) {
+			if (app.jsonUtils.isObjectKey(this.model, key)) {
 				return this.constructor;
 			}
-			if (utils.isValueKey(this.model, key)) {
-				return app.KeyValueInputView;
+			if (app.jsonUtils.isValueKey(this.model, key)) {
+				return KeyValueInputView;
 			}
 		},
 		createSubView: function(key) {
 			var k = this.keyList.slice();
 			k.push(key);
 			var ViewType = this.getSubViewType(key);
-			this.subViews[key] = new ViewType({model: this.model[key], keyList: k, baseView: this.baseView});
+			this.subViews[key] = new ViewType({baseModel: this.baseModel, keyList: k, baseView: this.baseView});
+			return this.subViews[key];
 		},
 		getSubView: function(key) {
 			var subView = this.subViews[key];
 			if (!subView) {
-				this.createSubView(key);
+				subView = this.createSubView(key);
 			}
 			return subView;
 		},
 		generateSubViews: function() {
-			var keys = app.jsonUtils.getOrderedKeys(this.model[this.key]);
+			var keys = app.jsonUtils.getOrderedKeys(this.model);
 			for (var i = 0; i < keys.length; i++) {
 				var subView = this.getSubView(keys[i]);
 				this.appendSubView(subView);
@@ -50,14 +48,28 @@ define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer
 		},
 		appendSubView: function(view) {
 			view.render();
-			var a = 0;
-			this.$el.children(".jsonContent").append(view.$el);
+			console.log(this.$el.children(".js_jsContainer"));
+			this.$el.css("margin-left", (10*this.depth) + "px");
+			this.$el.children(".js_jsContainer").append(view.$el);
 			view.delegateEvents();
 		},
 		showSubViews: function() {
-			for (var i = 0; i < this.subViews.length; i++) {
-				this.subViews[i].$el.show();
-			}
+			this.$(".js_jsContainer").show();
+			/*
+			_.each(this.subViews, function(view) {
+				console.log(view.$el);
+				view.$el.show();
+				view.$el.css({display: ""});
+			});
+			*/
+		},
+		hideSubViews: function() {
+			this.$(".js_jsContainer").hide();
+			/*
+			_.each(this.subViews, function(view) {
+				view.$el.hide();
+			});
+			*/
 		},
 		onExpand: function(evt) {
 			evt.stopPropagation();

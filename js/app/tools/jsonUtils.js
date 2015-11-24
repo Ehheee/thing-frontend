@@ -1,5 +1,16 @@
 define([], function() {
 	var module = function() {};
+	module.prototype.stringToType = function(value) {
+		var result = value;
+		if (_.isString(value)) {
+			value = value.toLowerCase();
+			result = value === 'true' || (value === 'false' ? false : result);
+			if ($.isNumeric(value)) {
+				result = parseInt(value);
+			}
+		}
+		return result;
+	};
 	module.prototype.removeNullValues = function(tree) {
 		_.each(tree, function(value, prop) {
 			if (value === null) {
@@ -31,6 +42,12 @@ define([], function() {
 			}
 		});
 		return result;
+	};
+	module.prototype.isObjectKey = function(jsonTree, key) {
+		return _.keys(jsonTree[key]).length > 0;
+	};
+	module.prototype.isValueKey = function(jsonTree, key) {
+		return _.keys(jsonTree[key]).length < 1;
 	};
 	module.prototype.getFromJson = function(tree, keyList) {
 		if (keyList.length === 0) {

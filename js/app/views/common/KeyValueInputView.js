@@ -3,9 +3,9 @@ define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer
 		template: app.templateLoader.get("keyValueInputTemplate"),
 		buttonTemplate: app.templateLoader.get("buttonTemplate"),
 		className: "keyValueInput",
-		events: {
+		events: _.extend(BaseObjectView.prototype.events, {
 			"blur .js_valueInput": "onValueInput"
-		},
+		}),
 		initialize: function(options) {
 			BaseObjectView.prototype.initialize.call(this, options);
 		},

@@ -15,12 +15,13 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 	module.prototype.getField = function(keyList) {
 		return app.jsonUtils.getFromJson(this.data, keyList);
 	};
-	module.prototype.renameKey = function(keyList, newKey) {
+	module.prototype.renameKey = function(keyList, oldKey, newKey) {
+		var keys = keyList.splice();
 		if (oldKey !== newKey) {
-			app.jsonUtils.renameKey(this.data, keyList, newKey);
-			keyList.pop();
-			keyList.push(newKey);
-			this.changes.push({keyList: keyList, key: oldKey});
+			app.jsonUtils.renameKey(this.data, keys, newKey);
+			keys.pop();
+			keys.push(newKey);
+			this.changes.push({keyList: keys, key: oldKey});
 			this.changed = true;
 		}
 	};

@@ -4,7 +4,7 @@ define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer
 			"click .expandButton": "onExpand"
 		},
 		template: app.templateLoader.get("jsObjectTemplate"),
-		className: "jsObject",
+		className: "jsObject il",
 		initialize: function(options) {
 			this.subViews = {};
 			BaseObjectView.prototype.initialize.call(this, options);
@@ -49,7 +49,7 @@ define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer
 		appendSubView: function(view) {
 			view.render();
 			console.log(this.$el.children(".js_jsContainer"));
-			this.$el.css("margin-left", (10*this.depth) + "px");
+			//this.$el.css("margin-left", (10*this.depth) + "px");
 			this.$el.children(".js_jsContainer").append(view.$el);
 			view.delegateEvents();
 		},

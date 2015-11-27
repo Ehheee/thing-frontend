@@ -6,7 +6,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		render: function() {
 			this.$el.html(this.template({key: (this.key ? this.key: this.displayName)}));
 			this.delegateEvents();
-			this.$el.css("margin-left", (11*this.depth) + "px");
+			//this.$el.css("margin-left", (11*this.depth) + "px");
 			return this;
 		},
 		initialize: function(options) {

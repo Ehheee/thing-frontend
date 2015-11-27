@@ -62,5 +62,30 @@ define([], function() {
 			return tree[keyList[0]];
 		}
 	};
+	module.prototype.setField = function(tree, keyList, value) {
+		this.changeInJson(tree, keyList.splice(), value);
+	};
+	module.prototype.changeInJson = function(tree, keyList, value) {
+		if (keyList.length > 1) {
+			this.changeInJson(tree[keyList.shift()], keyList, value);
+		} else {
+			tree[keyList[0]] = value;
+		}
+	};
+	module.prototype.renameKey = function(tree, keyList, newKey) {
+		this.changeJsonKey(tree, keyList.splice(), newKey);
+	};
+	module.prototype.changeJsonKey = function(tree, keyList, newKey) {
+		if (keyList.length > 1) {
+			this.changeJsonKey(tree[keyList.shift()], keyList, newKey);
+		} else {
+			if (_.isArray(tree)) {
+				throw Exceptions.JsonModifyingException("Modifying array keys is not supported");
+			}
+			var value = tree[keyList[0]];
+			delete tree[keyList[0]];
+			tree[newKey] = value;
+		}
+	};
 	return new module();
 });

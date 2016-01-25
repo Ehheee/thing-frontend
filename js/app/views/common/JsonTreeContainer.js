@@ -6,12 +6,20 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		},
 		className: "js_jsContainer",
 		render: function() {
+		    if (!this.subView && this.model) {
+		        this.createSubView();
+		    }
 			this.$el.html(this.subView.render().el);
 			return this;
 		},
 		initialize: function(options) {
 			_.extend(this, options);
-			this.listenTo(this.filter, "filter:newData", this.onNewData);  
+			this.setFilter();
+		},
+		setFilter: function() {
+		    if (this.filter) {
+		        this.listenTo(this.filter, "filter:newData", this.onNewData);
+		    }  
 		},
 		onNewData: function(model) {
 			this.model = model;

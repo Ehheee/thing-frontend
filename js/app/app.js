@@ -1,5 +1,25 @@
-define(["backbone", "jquery", "app/router", "app/applicationContainer", "app/filters/ThingFilter", "app/views/common/JsonTreeContainer", "app/views/common/JsObjectView", "app/views/common/KeyValueInputView", "app/data/RecursiveModel"],
-function(Backbone, $, router, app, ThingFilter, JsonTreeContainer, JsObjectView, KeyValueInputView, RecursiveModel) {
+define(["backbone", 
+		"jquery", 
+		"app/router", 
+		"app/applicationContainer", 
+		"app/filters/ThingFilter",
+		"app/views/common/ArrayView", 
+		"app/views/common/JsonTreeContainer", 
+		"app/views/common/JsObjectView", 
+		"app/views/common/KeyValueInputView", 
+		"app/data/RecursiveModel"
+		],
+function(Backbone, 
+		 $, 
+		 router, 
+		 app, 
+		 ThingFilter,
+		 ArrayView,
+		 JsonTreeContainer, 
+		 JsObjectView, 
+		 KeyValueInputView, 
+		 RecursiveModel
+		 ) {
 	var module = function() {
 		//this.dataProvider = dataProvider;
 	};
@@ -10,11 +30,15 @@ function(Backbone, $, router, app, ThingFilter, JsonTreeContainer, JsObjectView,
 		app.ThingFilter = ThingFilter;
 		app.RecursiveModel = RecursiveModel;
 		app.KeyValueInputView = KeyValueInputView;
+		app.ArrayView = ArrayView; 
 		console.log("running");
 		var filter = new app.ThingFilter();
-		var jsonContainer = new app.JsonTreeContainer({filter: filter, displayName: "bla"});
-		jsonContainer.onNewData(new RecursiveModel({abc: "avc", acd: {aml: "sdfsd", ooo: {aaaa: "bbbb"}}}));
-		$("body").append(jsonContainer.$el);
+		var data = [{abc: "avc", acd: {aml: "sdfsd", ooo: {aaaa: "bbbb"}}},
+		            {oiuoiu: "lkj", hgjgh: {uytu: "nvbnv", hgfh: {ytryrt: "gdf"}}}
+		];
+		var arrayView = new ArrayView({filter: filter, SubView: app.JsonTreeContainer});
+		filter.onResult(data);
+		$("body").append(arrayView.$el);
 	};
 	_.extend(module.prototype, Backbone.Events);
 	return new module();

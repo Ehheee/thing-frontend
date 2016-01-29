@@ -7,7 +7,9 @@ define(["backbone",
 		"app/views/common/JsonTreeContainer", 
 		"app/views/common/JsObjectView", 
 		"app/views/common/KeyValueInputView", 
-		"app/data/RecursiveModel"
+		"app/data/RecursiveModel",
+		"socks",
+		"stomp"
 		],
 function(Backbone, 
 		 $, 
@@ -18,7 +20,9 @@ function(Backbone,
 		 JsonTreeContainer, 
 		 JsObjectView, 
 		 KeyValueInputView, 
-		 RecursiveModel
+		 RecursiveModel,
+		 SockJS,
+		 Stomp
 		 ) {
 	var module = function() {
 		//this.dataProvider = dataProvider;
@@ -36,9 +40,20 @@ function(Backbone,
 		var data = [{abc: "avc", acd: {aml: "sdfsd", ooo: {aaaa: "bbbb"}}},
 		            {oiuoiu: "lkj", hgjgh: {uytu: "nvbnv", hgfh: {ytryrt: "gdf"}}}
 		];
+		
 		var arrayView = new ArrayView({filter: filter, SubView: app.JsonTreeContainer});
 		filter.onResult(data);
 		$("body").append(arrayView.$el);
+		var sock = new SockJS("http://127.0.0.1/thingone/ws");
+		var stompClient = window.Stomp.over(sock);
+		stompClient.connect({"path": "app"}, function(frame) {
+		    stompClient.send("/aa");
+		    
+		}, function() {
+		    console.log("bb", arguments);
+		});
+		setTimeout(function() {stompClient.send("/app/aa");}, 5000);
+		
 	};
 	_.extend(module.prototype, Backbone.Events);
 	return new module();

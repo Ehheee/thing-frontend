@@ -11,8 +11,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 			}
 		},
 		initialize: function(options) {
-			this.filter = options.filter;
-			this.SubView = options.SubView;
+			_.extend(this, options);
 			this.subViews = [];
 			this.listenTo(this.filter, "filter:newData", this.onNewData);  
 		},

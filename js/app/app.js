@@ -1,6 +1,7 @@
 define(["backbone", 
-		"jquery", 
-		"app/router", 
+		"jquery",
+		"app/config", 
+		"app/Router", 
 		"app/applicationContainer", 
 		"app/filters/ThingFilter",
 		"app/views/common/ArrayView", 
@@ -13,7 +14,8 @@ define(["backbone",
 		],
 function(Backbone, 
 		 $, 
-		 router, 
+		 config,
+		 Router, 
 		 app, 
 		 ThingFilter,
 		 ArrayView,
@@ -36,24 +38,9 @@ function(Backbone,
 		app.KeyValueInputView = KeyValueInputView;
 		app.ArrayView = ArrayView; 
 		console.log("running");
-		var filter = new app.ThingFilter();
-		var data = [{abc: "avc", acd: {aml: "sdfsd", ooo: {aaaa: "bbbb"}}},
-		            {oiuoiu: "lkj", hgjgh: {uytu: "nvbnv", hgfh: {ytryrt: "gdf"}}}
-		];
-		
-		var arrayView = new ArrayView({filter: filter, SubView: app.JsonTreeContainer});
-		filter.onResult(data);
-		$("body").append(arrayView.$el);
-		var sock = new SockJS("http://127.0.0.1/thingone/ws");
-		var stompClient = window.Stomp.over(sock);
-		stompClient.connect({"path": "app"}, function(frame) {
-		    stompClient.send("/aa");
-		    
-		}, function() {
-		    console.log("bb", arguments);
-		});
-		setTimeout(function() {stompClient.send("/app/aa");}, 5000);
-		
+		appRootUrl = config["appRootUrl"];
+		var router = new Router();
+		Backbone.history.start({pushState: true, hashChange: false, root: appRootUrl});
 	};
 	_.extend(module.prototype, Backbone.Events);
 	return new module();

@@ -4,7 +4,7 @@ define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer
 			"click .expandButton": "onExpand"
 		},
 		template: app.templateLoader.get("jsObjectTemplate"),
-		className: "jsObject il",
+		className: "jsObject ",
 		initialize: function(options) {
 			this.subViews = {};
 			BaseObjectView.prototype.initialize.call(this, options);

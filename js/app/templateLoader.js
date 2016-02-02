@@ -8,7 +8,7 @@ define(["backbone", "app/config"], function(Backbone, config) {
 	var loaded = 0;
 	for (var i = 0; i < templateFiles.length; i++) {
 		$.ajax({
-			url: "/" + config.appRootUrl + templateFiles[i],
+			url: config.appRootUrl + templateFiles[i],
 			
 		}).done(function(html) {
 			html = $(html);
@@ -19,10 +19,11 @@ define(["backbone", "app/config"], function(Backbone, config) {
 			});
 			loaded++;
 			if (loaded === templateFiles.length) {
+			    console.log(module);
 				Backbone.trigger("templates:loaded");
 			}
 		});
 	}
-	console.log(module);
+	
 	return module;
 });

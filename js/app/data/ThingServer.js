@@ -8,7 +8,7 @@ define(["backbone", "jquery", "app/config"], function(Backbone, $, config) {
             this.showSpinner();
         }
         console.log(options);
-        var requestData = JSON.stringify(attributes);
+        var requestData = JSON.stringify(options.data);
         var context = this;
         $.ajax({
             data: requestData,

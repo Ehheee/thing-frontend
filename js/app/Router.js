@@ -1,15 +1,16 @@
-define(["backbone", "app/views/common/MainView"], function(Backbone, MainView) {
+define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 	var module = Backbone.Router.extend({
 	    routes: {
-	        "thingtype/create/": "showThingTypeCreate"
+	        "thingtype/edit/(:type)": "showThingTypeCreate"
 	    },
 		initialize: function() {
             Backbone.on("router:navigate", this.navigate, this);
-            this.mainView = new MainView();
+            this.mainView = new app.MainView();
             this.mainView.render();
         },
-        showThingTypeCreate: function() {
-            console.log("here here");
+        showThingTypeCreate: function(type) {
+            this.mainView.setView(new app.ThingTypeEditor({type: type}));
+            this.mainView.render();
         }
 	});
 	return module;

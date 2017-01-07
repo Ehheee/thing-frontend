@@ -17,7 +17,7 @@ define(["backbone", "jquery", "app/config"], function(Backbone, $, config) {
             dataType: "json",
             url: config["server.url"] + (options.path ? options.path : "")
         }).done(function(data, state, r){
-            console.log(data, state, r);
+            Backbone.trigger(options.responseChannel, data);
         }).always(function(data, textStatus) {
             
         });

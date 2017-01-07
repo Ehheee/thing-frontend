@@ -44,7 +44,7 @@ define([], function() {
 		return result;
 	};
 	module.prototype.isObjectKey = function(jsonTree, key) {
-		return _.keys(jsonTree[key]).length > 0;
+		return _.isObject(jsonTree[key]);
 	};
 	module.prototype.isValueKey = function(jsonTree, key) {
 		return _.keys(jsonTree[key]).length < 1;

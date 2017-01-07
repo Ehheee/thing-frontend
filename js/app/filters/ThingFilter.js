@@ -1,8 +1,4 @@
-define(["backbone"], function(Backbone) {
-	var application;
-	Backbone.once("application:loaded", function(app) {
-		application = app;
-	});
+define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 	var module = function() {
 	};
 	module.prototype.onResult = function(data) {

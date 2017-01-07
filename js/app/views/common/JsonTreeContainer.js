@@ -9,7 +9,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		    if (!this.subView && this.model) {
 		        this.createSubView();
 		    }
-			this.$el.html(this.subView.render().el);
+			this.$el.html(this.subView ? this.subView.render().el : "");
 			return this;
 		},
 		initialize: function(options) {

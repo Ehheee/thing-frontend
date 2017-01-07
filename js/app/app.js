@@ -1,13 +1,17 @@
 define(["backbone", 
 		"jquery",
-		"app/config", 
+		"app/config",
+		"app/data/ThingServer", 
 		"app/Router", 
 		"app/applicationContainer", 
 		"app/filters/ThingFilter",
 		"app/views/common/ArrayView", 
 		"app/views/common/JsonTreeContainer", 
 		"app/views/common/JsObjectView", 
-		"app/views/common/KeyValueInputView", 
+		"app/views/common/KeyValueInputView",
+		"app/views/common/MainView",
+		"app/views/common/menu/MainMenu",
+		"app/views/thing/ThingTypeEditor",
 		"app/data/RecursiveModel",
 		"socks",
 		"stomp"
@@ -15,13 +19,17 @@ define(["backbone",
 function(Backbone, 
 		 $, 
 		 config,
+		 ThingServer,
 		 Router, 
 		 app, 
 		 ThingFilter,
 		 ArrayView,
 		 JsonTreeContainer, 
 		 JsObjectView, 
-		 KeyValueInputView, 
+		 KeyValueInputView,
+		 MainView,
+		 MainMenu,
+		 ThingTypeEditor,
 		 RecursiveModel,
 		 SockJS,
 		 Stomp
@@ -36,7 +44,10 @@ function(Backbone,
 		app.ThingFilter = ThingFilter;
 		app.RecursiveModel = RecursiveModel;
 		app.KeyValueInputView = KeyValueInputView;
-		app.ArrayView = ArrayView; 
+		app.ArrayView = ArrayView;
+		app.MainView = MainView;
+		app.MainMenu = MainMenu;
+		app.ThingTypeEditor = ThingTypeEditor;
 		console.log("running");
 		appRootUrl = config["appRootUrl"];
 		var router = new Router();

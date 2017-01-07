@@ -11,3 +11,11 @@
 .ml30 {
 	margin-left: 30px;
 }
+.jsObject {
+    border-style: dotted;
+    border-width: 0px;
+    border-left-width: 1px;
+}
+.js_keyInput {
+    margin-top: 3px;
+}

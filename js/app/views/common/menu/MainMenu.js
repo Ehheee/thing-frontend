@@ -33,7 +33,7 @@ define(["backbone", "app/templateLoader"], function(Backbone, templateLoader) {
 			var action = this.routes[routeKey];
 			if (action) {
 				if (_.isString(action)) {
-					Backbone.trigger("router:navigate", evt.currentTarget.pathname.replace(appRootUrl, ""), {trigger: true});
+					Backbone.trigger("router:navigate", evt.currentTarget.pathname.replace(appRootUrl + "/", ""), {trigger: true});
 				} else if (_.isObject(action)) {
 					var constructor = this.constructor;
 					var child = new constructor({routes: action});
@@ -44,7 +44,7 @@ define(["backbone", "app/templateLoader"], function(Backbone, templateLoader) {
 		routes: {
 			"Home": "/",
 			"ThingType": {
-				"Create": "/thingtype/create/"
+				"Create": "/thingtype/edit/"
 			},
 		}
 	});

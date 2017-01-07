@@ -67,7 +67,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		},
 		listenClearAndApply: function() {
 			this.listenToOnce(this.baseModel, "model:save", this.applyChanges);
-			this.listenToOnce(this.baseModel, "model.revert", this.revertChanges);
+			this.listenToOnce(this.baseModel, "model:revert", this.revertChanges);
 		}
 	});
 	return module;

@@ -10,6 +10,9 @@
 <script type="text/template" id="jsObjectTemplate">
 	<div class="il lightBorder button expandButton">+</div>
 	<input class="js_keyInput" value="<%-key%>"></input>
+	<div class="il buttons">
+	    <div class="il button js_addButton">*</div>
+	</div>
 	<div class="js_jsContainer ml30"></div>
 </script>
 <script type="text/template" id="mainMenuItem">
@@ -24,4 +27,10 @@
 <script type="text/template" id="mainViewTemplate">
         <div class="js_mainMenu mainMenuContainer"></div>
         <div class="js_mainContent mainContent"></div>
+</script>
+<script type="text/template" id="contextMenuItem">
+    <div class="contextMenuItem <%=choice%>"><%=choice%></div>
+</script>
+<script type="text/template" id="linkTemplate">
+    <a class="contextMenuItem" href="<%=href%>"><%=text%></a>
 </script>

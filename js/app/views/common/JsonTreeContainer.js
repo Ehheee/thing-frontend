@@ -19,7 +19,7 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 		setFilter: function() {
 		    if (this.filter) {
 		        this.listenTo(this.filter, "filter:newData", this.onNewData);
-		    }  
+		    }
 		},
 		onNewData: function(model) {
 			this.model = model;

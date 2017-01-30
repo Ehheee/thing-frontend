@@ -11,6 +11,7 @@ define(["backbone",
 		"app/views/common/KeyValueInputView",
 		"app/views/common/MainView",
 		"app/views/common/menu/MainMenu",
+		"app/views/common/menu/ContextMenu",
 		"app/views/thing/ThingTypeEditor",
 		"app/data/RecursiveModel",
 		"socks",
@@ -29,6 +30,7 @@ function(Backbone,
 		 KeyValueInputView,
 		 MainView,
 		 MainMenu,
+		 ContextMenu,
 		 ThingTypeEditor,
 		 RecursiveModel,
 		 SockJS,
@@ -47,6 +49,7 @@ function(Backbone,
 		app.ArrayView = ArrayView;
 		app.MainView = MainView;
 		app.MainMenu = MainMenu;
+		app.ContextMenu = ContextMenu;
 		app.ThingTypeEditor = ThingTypeEditor;
 		console.log("running");
 		appRootUrl = config["appRootUrl"];

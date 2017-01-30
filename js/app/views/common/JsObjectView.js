@@ -1,7 +1,12 @@
 define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer", "app/views/common/KeyValueInputView"], function(Backbone, BaseObjectView, app, KeyValueInputView) {
 	var module = BaseObjectView.extend({
+	    contextMenuEntries: {
+	        "jsObject:addField": this.addField,
+	        "jsObject:addObject": this.addObject
+	    },
 		events: {
-			"click .expandButton": "onExpand"
+			"click .expandButton": "onExpand",
+			"click .js_addButton": "showAddMenu"
 		},
 		template: app.templateLoader.get("jsObjectTemplate"),
 		className: "jsObject ",
@@ -91,7 +96,18 @@ define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer
 			this.expandButton.removeClass("expanded");
 			this.expandButton.text("+");
 		},
-		
+		showAddMenu: function(evt) {
+		    evt.preventDefault();
+            evt.stopPropagation();
+		    this.contextMenu = new app.ContextMenu({xPositon: evt.pageX, yPosition: evt.pageY, choices: ["add", "addObject"], triggerChannel: "jsObject"});
+		    this.listeToOnce(this.contextMenu, contextMenuEntries);
+		},
+		addField: function() {
+		    console.log("add Field");
+		},
+		addObject: function() {
+		    console.log("addFunction");
+		}
 	});
 	return module;
 });

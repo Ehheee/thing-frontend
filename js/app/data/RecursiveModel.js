@@ -1,6 +1,6 @@
 define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 	var module = function(data) {
-		this.data = data;
+		this.data = data || {};
 		this.changes = [];
 	};
 	module.prototype.setField = function(keyList, value) {

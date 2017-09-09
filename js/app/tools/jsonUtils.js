@@ -63,7 +63,7 @@ define([], function() {
 		}
 	};
 	module.prototype.setField = function(tree, keyList, value) {
-		this.changeInJson(tree, keyList.splice(), value);
+		this.changeInJson(tree, keyList.slice(), value);
 	};
 	module.prototype.changeInJson = function(tree, keyList, value) {
 		if (keyList.length > 1) {

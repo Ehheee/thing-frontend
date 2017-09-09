@@ -100,7 +100,7 @@ define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer
 		    evt.preventDefault();
             evt.stopPropagation();
 		    this.contextMenu = new app.ContextMenu({xPositon: evt.pageX, yPosition: evt.pageY, choices: ["add", "addObject"], triggerChannel: "jsObject"});
-		    this.listeToOnce(this.contextMenu, contextMenuEntries);
+		    this.listenToOnce(this.contextMenu, this.contextMenuEntries);
 		},
 		addField: function() {
 		    console.log("add Field");

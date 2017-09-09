@@ -29,7 +29,8 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
         },
         newType: function() {
             this.resetJsonView();
-            this.onData({});
+            setTimeout(this.onData.bind(this, {}), 300);
+            //this.onData({});
         },
         resetJsonView: function() {
             if (this.jsonView) {

@@ -1,7 +1,8 @@
 define(["backbone", "app/applicationContainer"], function(Backbone, app) {
 	var module = Backbone.Router.extend({
 	    routes: {
-	        "thingtype/edit/(:type)": "showThingTypeCreate"
+	        "thingtype/edit/(:type)": "showThingTypeCreate",
+	        "test/": "test"
 	    },
 		initialize: function() {
             Backbone.on("router:navigate", this.navigate, this);
@@ -10,6 +11,10 @@ define(["backbone", "app/applicationContainer"], function(Backbone, app) {
         },
         showThingTypeCreate: function(type) {
             this.mainView.setView(new app.ThingTypeEditor({type: type}));
+            this.mainView.render();
+        },
+        test: function() {
+            this.mainView.setView(new app.TestView({}));
             this.mainView.render();
         }
 	});

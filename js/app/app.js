@@ -70,12 +70,13 @@ define(["backbone", "jquery", "app/config", "app/data/ThingServer", "app/Router"
 				app.jsonUtils.setField(context.stateMap, context.currentSequence, {});
 			}
 			context.currentState = context.stateMap[compositeKey];
-			oldFunc.apply(bindObject, arguments);
+			var toReturn = oldFunc.apply(bindObject, arguments);
 			context.currentSequence.splice(context.currentSequence.indexOf(compositeKey), 1);
 			if (context.currentSequence.length === 0) {
 				context.states.push(context.stateMap);
 				console.log(context.states);
 			}
+			return toReturn;
 		};
 	};
 	

@@ -1,9 +1,6 @@
 define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer", "app/views/common/KeyValueInputView"], function(Backbone, BaseObjectView, app, KeyValueInputView) {
 	var module = BaseObjectView.extend({
-	    contextMenuEntries: {
-	        "jsObject:addField": this.addField,
-	        "jsObject:addObject": this.addObject
-	    },
+	    
 		events: {
 			"click .expandButton": "onExpand",
 			"click .js_addButton": "showAddMenu"
@@ -107,7 +104,11 @@ define(["backbone", "app/views/common/BaseObjectView", "app/applicationContainer
 		},
 		addObject: function() {
 		    console.log("addFunction");
-		}
+		},
+		contextMenuEntries: {
+	        "jsObject:add": "addField",
+	        "jsObject:addObject": "addObject"
+	    },
 	});
 	return module;
 });
